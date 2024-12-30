@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useRouter } from 'next/navigation';
 import PromptModal from '@/components/PromptModal';
+import AudioPlayer from '@/components/AudioPlayer';
 
 const CountdownTimer: React.FC = () => {
     const [loading, setLoading] = useState(true);
@@ -19,7 +20,7 @@ const CountdownTimer: React.FC = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const router = useRouter();
 
-    const correctAnswer = "2";
+    const correctAnswer = "2025"; // Replace with the actual correct answer
 
     const textOptions = [
         "Đã trải qua 2 năm từ khi tốt nghiệp cấp 3 :3",
@@ -37,10 +38,12 @@ const CountdownTimer: React.FC = () => {
 
     useEffect(() => {
         const calculateTimeLeft = () => {
+            // Get current time and adjust to Vietnam time (UTC+7)
             const now = new Date();
-            const vietnamTime = new Date(now.getTime() + (now.getTimezoneOffset() + 420) * 60000);
+            const vietnamTime = new Date(now.getTime() + (now.getTimezoneOffset() + 420) * 60000); // Adjust to Vietnam Time (UTC+7)
 
-            const newYear2025 = new Date(Date.UTC(2024, 11, 31, 17, 0, 0));
+            // New Year's Eve midnight on 1st January 2025 (Hanoi time)
+            const newYear2025 = new Date(Date.UTC(2024, 11, 31, 17, 0, 0)); // 1st Jan 2025 midnight UTC+7
             const difference = newYear2025.getTime() - vietnamTime.getTime();
 
             if (difference <= 0) {
@@ -50,9 +53,9 @@ const CountdownTimer: React.FC = () => {
 
             // Calculate the remaining time
             const days = Math.floor(difference / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+            const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)); // Remaining hours
+            const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60)); // Remaining minutes
+            const seconds = Math.floor((difference % (1000 * 60)) / 1000); // Remaining seconds
 
             return { days, hours, minutes, seconds };
         };
@@ -111,7 +114,7 @@ const CountdownTimer: React.FC = () => {
         initial: { opacity: 0, y: -100 },
         animate: { opacity: 1, y: 0 },
         exit: { opacity: 0, y: 100 },
-        transition: { duration: 2.5, ease: "easeOut" },
+        transition: { duration: 2.5, ease: "easeOut" }, // Increase duration to 2.5 seconds
     };
 
     const numberVariants = {
@@ -121,8 +124,20 @@ const CountdownTimer: React.FC = () => {
         transition: { duration: 0.5, ease: "easeInOut" },
     };
 
+    const textVariants = {
+        animate: {
+            y: [0, -30, 0], // Keyframes for the animation
+            transition: {
+                duration: 2, // Duration of one loop
+                ease: "easeInOut",
+                repeat: Infinity, // Repeat the animation infinitely
+            },
+        },
+    };
+
     return (
         <div className="w-full h-screen bg-gradient-to-tl from-yellow-400 via-red-500 to-pink-500 text-white flex flex-col items-center justify-center font-sans relative">
+            <AudioPlayer />
             {showFireworks && (
                 <div className="fireworks">
                     <svg width="100%" height="100%">
@@ -141,7 +156,7 @@ const CountdownTimer: React.FC = () => {
                         variants={loadingVariants}
                         className="text-center"
                     >
-                        <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 animate-flicker">Reload Trang web để xem lời chúc !!</h1>
+                        <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 animate-flicker">Reload Trang web để xem thêm :*</h1>
                         <p className="text-xl sm:text-2xl md:text-3xl tracking-widest">{randomText}</p>
                     </motion.div>
                 ) : showFireworks ? (
@@ -153,7 +168,7 @@ const CountdownTimer: React.FC = () => {
                         className="text-center"
                     >
                         <h1 className="text-5xl sm:text-6xl md:text-7xl font-bold mb-6 animate-pulse text-primary">
-                            🎆 Happy New Year, Vietnam! 🎉
+                            🎆 Happy new year 2025 :3 🎉
                         </h1>
                         <div className="fireworks">
                             <svg width="100%" height="100%">
@@ -172,9 +187,13 @@ const CountdownTimer: React.FC = () => {
                         className="text-center items-center justify-center"
                     >
                         {!isLastMinute && (
-                            <h1 className="pt-10 sm:pt-20 text-4xl sm:text-5xl md:text-6xl font-bold mb-10 text-primary drop-shadow-md">
+                            <motion.h1
+                                className="pt-10 sm:pt-20 text-4xl sm:text-5xl md:text-6xl font-bold mb-10 drop-shadow-lg"
+                                variants={textVariants}
+                                animate="animate"
+                            >
                                 Countdown to 2025
-                            </h1>
+                            </motion.h1>
                         )}
                         <div className={`flex ${isLastMinute ? 'flex-col items-center justify-center w-full h-full' : 'justify-center space-x-4 sm:space-x-10'}`}>
                             {Object.entries(timeLeft).map(([unit, value]) => (
@@ -212,10 +231,10 @@ const CountdownTimer: React.FC = () => {
                 )}
                 {!loading && (
                     <button
-                        className="mt-10 px-4 sm:px-6 py-2 sm:py-3 bg-gradient-to-r from-yellow-400 via-red-500 to-pink-500 text-white rounded-lg hover:from-yellow-500 hover:via-red-600 hover:to-pink-600 transition transform hover:scale-105 shadow-lg"
+                        className="mt-10 px-4 sm:px-6 py-2 sm:py-3  transition transform hover:scale-105 shadow-lg"
                         onClick={handleButtonClick}
                     >
-                        ????
+                        Play
                     </button>
                 )}
             </AnimatePresence>

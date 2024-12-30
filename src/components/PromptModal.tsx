@@ -18,8 +18,8 @@ const PromptModal: React.FC<PromptModalProps> = ({ isOpen, onClose, onSubmit }) 
     return (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
             <div className="bg-white p-6 rounded-lg shadow-lg">
-                <h2 className="text-2xl font-bold mb-4 text-secondary">Enter the correct answer</h2>
-                <p className="text-xl text-secondary">1 + 1 = ?</p>
+                <h2 className="text-2xl font-bold mb-4 text-secondary">Password là...</h2>
+                <p className='text-gray'>2025</p>
                 <input
                     type="text"
                     value={answer}
