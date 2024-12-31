@@ -18,7 +18,6 @@ const Memories: React.FC = () => {
                 <Loading />
             ) : (
                 <>
-                    <h1 className="text-5xl font-bold mb-10">Memories</h1>
                     <div className="">
                         <ImageSlider />
                     </div>

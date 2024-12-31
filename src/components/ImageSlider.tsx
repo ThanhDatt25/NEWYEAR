@@ -1,5 +1,6 @@
 "use client";
 
+import Image from 'next/image';
 import React from 'react';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
@@ -17,41 +18,19 @@ export default function ImageSlider() {
     };
 
     const images = [
-        '/images/A.jpeg',
-        '/images/B.jpeg',
-        '/images/C.jpeg',
-        '/images/D.jpeg',
-        '/images/E.jpeg',
-        '/images/F.jpeg',
-        '/images/1.jpeg',
-        '/images/2.jpeg',
-        '/images/3.jpeg',
-        '/images/4.jpeg',
-        '/images/5.jpeg',
-        '/images/6.jpeg',
-        '/images/7.jpeg',
-        '/images/8.jpeg',
-        '/images/9.jpeg',
-        '/images/10.jpeg',
-        '/images/11.jpeg',
-        '/images/12.jpeg',
-        '/images/13.jpeg',
-
-
+        "A", "B", "C", "D", "E", "F", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13"
     ];
 
     return (
-        <div className="flex items-center justify-center w-full w-[350px]">
-            <div className="w-full max-w-[600px] h-auto p-4 mt-20 mb-20">
+
+        <div className=" items-center justify-center w-full">
+            <h1 className="text-5xl font-bold mb-10 text-center pt-20">Memories</h1>
+
+            <div className="w-full max-w-4xl h-auto p-4 mt-20 mb-20">
                 <Slider {...settings}>
                     {images.map((src, index) => (
-                        <div key={index} className="w-full h-full">
-                            <img
-                                src={src}
-                                alt={`Remind ${index + 1}`}
-                                className="w-full h-full object-contain outline-none"
-                                onClick={(e) => e.currentTarget.blur()}
-                            />
+                        <div key={index} className="flex items-center justify-center w-full h-[900px] md:h-[800px] lg:h-[800px] relative">
+                            <Image src={`/images/${src}.jpeg`} alt={"Anh"} width={200} height={600} className="w-full h-full" />
                         </div>
                     ))}
                 </Slider>
