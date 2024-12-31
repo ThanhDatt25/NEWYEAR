@@ -42,9 +42,10 @@ const CountdownTimer: React.FC = () => {
             const now = new Date();
             const vietnamTime = new Date(now.getTime() + (now.getTimezoneOffset() + 420) * 60000); // Adjust to Vietnam Time (UTC+7)
 
-            // New Year's Eve midnight on 1st January 2025 (Hanoi time)
-            const newYear2025 = new Date(Date.UTC(2024, 11, 31, 17, 0, 0)); // 1st Jan 2025 midnight UTC+7
-            const difference = newYear2025.getTime() - vietnamTime.getTime();
+            // Target date: January 29, 2025 (Hanoi time)
+            const targetDate = new Date(Date.UTC(2025, 0, 28, 17, 0, 0)); // 29th Jan 2025 midnight UTC+7
+
+            const difference = targetDate.getTime() - vietnamTime.getTime();
 
             if (difference <= 0) {
                 setShowFireworks(true);
